@@ -32,10 +32,7 @@
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
+        /* Removed scroll-behavior from html to allow JS to control it */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
@@ -43,6 +40,21 @@
             overflow-x: hidden;
             background-color: var(--gray-100);
         }
+        
+        /* Smooth Scroll Styles */
+        #smooth-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #smooth-content {
+            will-change: transform; /* Performance optimization */
+        }
+
 
         /* Header */
         .header {
@@ -595,174 +607,229 @@
             line-height: 1.5;
         }
 
-        /* Contact Section */
+        /* New Contact Section */
         .contact {
-            padding: 4rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            padding: 6rem 0;
+            background: white;
         }
 
-        .contact::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
-            /* NOTE: The path is updated to just the filename.
-               Upload '3904793.jpg' to the same folder as this HTML file on GitHub.
-            */
-            background-image: url('3904793.jpg'); 
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            filter: blur(8px);
-            transform: scale(1.05); /* Prevents blurred edges from showing */
+        .contact .section-title,
+        .contact .section-subtitle {
+            color: var(--dark);
+        }
+        .contact .section-subtitle {
+            color: var(--gray-500);
         }
 
-
-        .contact-glass-content {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 20px;
-            padding: 3rem;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            position: relative; /* Add this */
-            z-index: 2; /* Add this */
-        }
-
-        .contact-content {
-            /* Styles moved to the new glass content wrapper */
-        }
-
-        .contact-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .contact-subtitle {
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-            opacity: 0.9;
-        }
-
-        .contact-methods {
+        .contact-wrapper {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            background: var(--gray-100);
+            padding: 4rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-details {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
             gap: 2rem;
-            margin: 3rem 0;
         }
 
-        .contact-method {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
+        .contact-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
             text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        .contact-detail-item:hover {
+            color: var(--primary);
+        }
+
+        .contact-icon-wrapper {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            flex-shrink: 0;
         }
 
-        .contact-method:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px) scale(1.03);
-        }
-
-        .contact-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .contact-info {
+        .contact-detail-item h4 {
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
+            color: var(--dark);
         }
 
-        .contact-desc {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            word-break: break-all;
+        .contact-detail-item span {
+            color: var(--gray-500);
         }
+
+        .contact-form-wrapper {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-form-wrapper h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--dark);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--gray-300);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
 
         /* Footer */
         .footer {
-            padding: 4rem 2rem; /* Adjusted padding */
-            margin-top: 6rem; /* Added separation from the section above */
-            position: relative;
-            background: var(--gradient); /* Using the button hover gradient */
+            background-color: var(--dark);
             color: var(--gray-300);
-        }
-        
-        .footer-glass-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.25); /* Darker glass effect */
-            border-radius: 20px;
-            padding: 2.5rem;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6rem 0 2rem 0;
         }
 
-        .footer-content {
-             /* Styles moved to the new glass content wrapper */
-        }
-        
-        .footer-main {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-bottom: 2rem; /* Reduced margin */
-        }
-        
-        .footer-info .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .footer .logo {
             color: var(--white);
-            margin-bottom: 0.5rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
         }
 
-        .footer-info p {
-            color: var(--gray-300);
-            max-width: 300px;
+        .footer-col .footer-about {
+            margin-top: 1rem;
+            color: var(--gray-500);
+            line-height: 1.8;
+            max-width: 250px;
+        }
+
+        .footer-heading {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--gray-500);
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .footer-contact {
+            list-style: none;
+            color: var(--gray-500);
+        }
+
+        .footer-contact li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .footer-social {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
         .footer-social a {
-            color: var(--gray-300);
-            font-size: 1.5rem;
+            color: var(--gray-500);
+            font-size: 1.25rem;
             text-decoration: none;
             transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--gray-700);
+            border-radius: 50%;
         }
         
         .footer-social a:hover {
             color: var(--white);
+            background: var(--primary);
+            border-color: var(--primary);
             transform: translateY(-3px);
         }
 
-        .copyright {
-            color: var(--gray-300);
-            font-size: 0.9rem;
+        .footer-bottom {
+            border-top: 1px solid var(--gray-800);
+            padding-top: 2rem;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Lighter border */
-            padding-top: 1.5rem; /* Reduced padding */
+            color: var(--gray-500);
+            font-size: 0.9rem;
         }
 
+
         /* Responsive Design */
+        @media (max-width: 992px) {
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+                padding: 2.5rem;
+                gap: 3rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -818,13 +885,20 @@
                  grid-template-columns: 1fr;
             }
 
-            .footer-main {
-                flex-direction: column;
-                text-align: center;
+            .contact-wrapper {
+                padding: 2rem;
             }
 
-            .footer-info p {
-                margin: 0 auto;
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-col .footer-about {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .footer-social {
+                justify-content: center;
             }
         }
 
@@ -882,291 +956,376 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-avatar fade-in"></div>
-            <h1 class="fade-in">Sabbir Hosen</h1>
-            <p class="hero-subtitle fade-in">Professional UI/UX Designer creating user-centric, visually appealing, and conversion-focused digital experiences.</p>
-            <div class="hero-stats fade-in">
-                <div class="stat">
-                    <span class="stat-number">8+</span>
-                    <span class="stat-label">Years Experience</span>
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+            <!-- Hero Section -->
+            <section class="hero" id="home">
+                <div class="hero-content">
+                    <div class="hero-avatar fade-in"></div>
+                    <h1 class="fade-in">Sabbir Hosen</h1>
+                    <p class="hero-subtitle fade-in">Professional UI/UX Designer creating user-centric, visually appealing, and conversion-focused digital experiences.</p>
+                    <div class="hero-stats fade-in">
+                        <div class="stat">
+                            <span class="stat-number">8+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">200+</span>
+                            <span class="stat-label">Projects Completed</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">Global</span>
+                            <span class="stat-label">Client Reach</span>
+                        </div>
+                    </div>
+                    <div class="hero-buttons fade-in">
+                        <a href="#portfolio" class="btn btn-primary">
+                            <i class="fas fa-palette"></i>
+                            View Portfolio
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <i class="fas fa-paper-plane"></i>
+                            Let's Talk
+                        </a>
+                    </div>
                 </div>
-                <div class="stat">
-                    <span class="stat-number">200+</span>
-                    <span class="stat-label">Projects Completed</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">Global</span>
-                    <span class="stat-label">Client Reach</span>
-                </div>
-            </div>
-            <div class="hero-buttons fade-in">
-                <a href="#portfolio" class="btn btn-primary">
-                    <i class="fas fa-palette"></i>
-                    View Portfolio
-                </a>
-                <a href="#contact" class="btn btn-secondary">
-                    <i class="fas fa-paper-plane"></i>
-                    Let's Talk
-                </a>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <h2 class="section-title">My Services</h2>
-                <p class="section-subtitle">Crafting clean, modern, and efficient design systems that deliver real impact.</p>
-            </div>
-            <div class="services-grid">
-                <!-- Service Card 1 -->
-                <div class="service-card animate-on-scroll">
-                    <div class="service-icon"><i class="fas fa-star"></i></div>
-                    <h3 class="service-title">Logo Design</h3>
-                    <p class="service-description">Custom logo design with multiple variations and brand guidelines.</p>
-                    <div class="service-price">$150</div>
-                    <ul class="service-features">
-                        <li>Multiple concept variations</li>
-                        <li>Unlimited revisions</li>
-                        <li>All source files included</li>
-                        <li>Brand guidelines</li>
-                </ul>
-                 <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
+            <!-- Services Section -->
+            <section class="services" id="services">
+                <div class="container">
+                    <div class="section-header animate-on-scroll">
+                        <h2 class="section-title">My Services</h2>
+                        <p class="section-subtitle">Crafting clean, modern, and efficient design systems that deliver real impact.</p>
+                    </div>
+                    <div class="services-grid">
+                        <!-- Service Card 1 -->
+                        <div class="service-card animate-on-scroll">
+                            <div class="service-icon"><i class="fas fa-star"></i></div>
+                            <h3 class="service-title">Logo Design</h3>
+                            <p class="service-description">Custom logo design with multiple variations and brand guidelines.</p>
+                            <div class="service-price">$150</div>
+                            <ul class="service-features">
+                                <li>Multiple concept variations</li>
+                                <li>Unlimited revisions</li>
+                                <li>All source files included</li>
+                                <li>Brand guidelines</li>
+                        </ul>
+                         <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
+                        </div>
+                        <!-- Service Card 2 -->
+                        <div class="service-card animate-on-scroll">
+                            <div class="service-icon"><i class="fas fa-globe"></i></div>
+                            <h3 class="service-title">Landing Page Design</h3>
+                            <p class="service-description">Conversion-optimized landing pages that turn visitors into customers.</p>
+                            <div class="service-price">$199</div>
+                            <ul class="service-features">
+                                <li>Mobile responsive design</li>
+                                <li>Conversion optimized</li>
+                                <li>Additional pages: $100 each</li>
+                                <li>SEO structure included</li>
+                        </ul>
+                         <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
+                        </div>
+                        <!-- Service Card 3 -->
+                        <div class="service-card animate-on-scroll">
+                            <div class="service-icon"><i class="fas fa-desktop"></i></div>
+                            <h3 class="service-title">SaaS Landing Page</h3>
+                            <p class="service-description">Feature-rich SaaS landing pages with pricing tables and trial CTAs.</p>
+                            <div class="service-price">$299</div>
+                            <ul class="service-features">
+                                <li>Feature highlighting</li>
+                                <li>Pricing table integration</li>
+                                <li>Free trial CTAs</li>
+                                <li>User journey optimized</li>
+                        </ul>
+                         <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
+                        </div>
+                        <!-- Service Card 4 -->
+                        <div class="service-card animate-on-scroll">
+                            <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <h3 class="service-title">Mobile App Design</h3>
+                            <p class="service-description">Complete mobile app UI/UX design for iOS and Android.</p>
+                            <div class="service-price">$599</div>
+                            <ul class="service-features">
+                                <li>10 custom app screens</li>
+                                <li>iOS & Android guidelines</li>
+                                <li>Interactive prototype</li>
+                                <li>Additional screens: $50 each</li>
+                        </ul>
+                         <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
+                        </div>
+                        <!-- Service Card 5 -->
+                        <div class="service-card animate-on-scroll">
+                            <div class="service-icon"><i class="fas fa-layer-group"></i></div>
+                            <h3 class="service-title">Complete Website Design</h3>
+                            <p class="service-description">Full website solution with consistent brand identity.</p>
+                            <div class="service-price">$499</div>
+                            <ul class="service-features">
+                                <li>5 pages included</li>
+                                <li>Consistent brand identity</li>
+                                <li>User journey optimized</li>
+                                <li>Additional pages: $200 each</li>
+                        </ul>
+                         <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
+                        </div>
+                        <!-- Service Card 6 -->
+                        <div class="service-card animate-on-scroll">
+                            <div class="service-icon"><i class="fas fa-code"></i></div>
+                            <h3 class="service-title">Design + Development</h3>
+                            <p class="service-description">Complete solution from design to live website deployment.</p>
+                            <div class="service-price">$999</div>
+                            <ul class="service-features">
+                                <li>Full website solution</li>
+                                <li>Live deployment</li>
+                                <li>CMS integration</li>
+                                <li>SEO optimized</li>
+                        </ul>
+                            <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
+                        </div>
+                    </div>
                 </div>
-                <!-- Service Card 2 -->
-                <div class="service-card animate-on-scroll">
-                    <div class="service-icon"><i class="fas fa-globe"></i></div>
-                    <h3 class="service-title">Landing Page Design</h3>
-                    <p class="service-description">Conversion-optimized landing pages that turn visitors into customers.</p>
-                    <div class="service-price">$199</div>
-                    <ul class="service-features">
-                        <li>Mobile responsive design</li>
-                        <li>Conversion optimized</li>
-                        <li>Additional pages: $100 each</li>
-                        <li>SEO structure included</li>
-                </ul>
-                 <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
-                </div>
-                <!-- Service Card 3 -->
-                <div class="service-card animate-on-scroll">
-                    <div class="service-icon"><i class="fas fa-desktop"></i></div>
-                    <h3 class="service-title">SaaS Landing Page</h3>
-                    <p class="service-description">Feature-rich SaaS landing pages with pricing tables and trial CTAs.</p>
-                    <div class="service-price">$299</div>
-                    <ul class="service-features">
-                        <li>Feature highlighting</li>
-                        <li>Pricing table integration</li>
-                        <li>Free trial CTAs</li>
-                        <li>User journey optimized</li>
-                </ul>
-                 <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
-                </div>
-                <!-- Service Card 4 -->
-                <div class="service-card animate-on-scroll">
-                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h3 class="service-title">Mobile App Design</h3>
-                    <p class="service-description">Complete mobile app UI/UX design for iOS and Android.</p>
-                    <div class="service-price">$599</div>
-                    <ul class="service-features">
-                        <li>10 custom app screens</li>
-                        <li>iOS & Android guidelines</li>
-                        <li>Interactive prototype</li>
-                        <li>Additional screens: $50 each</li>
-                </ul>
-                 <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
-                </div>
-                <!-- Service Card 5 -->
-                <div class="service-card animate-on-scroll">
-                    <div class="service-icon"><i class="fas fa-layer-group"></i></div>
-                    <h3 class="service-title">Complete Website Design</h3>
-                    <p class="service-description">Full website solution with consistent brand identity.</p>
-                    <div class="service-price">$499</div>
-                    <ul class="service-features">
-                        <li>5 pages included</li>
-                        <li>Consistent brand identity</li>
-                        <li>User journey optimized</li>
-                        <li>Additional pages: $200 each</li>
-                </ul>
-                 <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
-                </div>
-                <!-- Service Card 6 -->
-                <div class="service-card animate-on-scroll">
-                    <div class="service-icon"><i class="fas fa-code"></i></div>
-                    <h3 class="service-title">Design + Development</h3>
-                    <p class="service-description">Complete solution from design to live website deployment.</p>
-                    <div class="service-price">$999</div>
-                    <ul class="service-features">
-                        <li>Full website solution</li>
-                        <li>Live deployment</li>
-                        <li>CMS integration</li>
-                        <li>SEO optimized</li>
-                </ul>
-                    <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Portfolio Section -->
-    <section class="portfolio" id="portfolio">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <h2 class="section-title">Portfolio & Work</h2>
-                <p class="section-subtitle">Explore a selection of my latest projects and creative solutions.</p>
-            </div>
-            <div class="portfolio-grid">
-                 <!-- Behance Item 1 -->
-                <div class="portfolio-item animate-on-scroll">
-                    <iframe src="https://www.behance.net/embed/project/231232393?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+            <!-- Portfolio Section -->
+            <section class="portfolio" id="portfolio">
+                <div class="container">
+                    <div class="section-header animate-on-scroll">
+                        <h2 class="section-title">Portfolio & Work</h2>
+                        <p class="section-subtitle">Explore a selection of my latest projects and creative solutions.</p>
+                    </div>
+                    <div class="portfolio-grid">
+                         <!-- Behance Item 1 -->
+                        <div class="portfolio-item animate-on-scroll">
+                            <iframe src="https://www.behance.net/embed/project/231232393?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                        </div>
+                        <!-- Behance Item 2 -->
+                        <div class="portfolio-item animate-on-scroll">
+                            <iframe src="https://www.behance.net/embed/project/230910193?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                        </div>
+                        <!-- Behance Item 3 -->
+                        <div class="portfolio-item animate-on-scroll">
+                            <iframe src="https://www.behance.net/embed/project/229871467?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                        </div>
+                        <!-- Behance Item 4 -->
+                        <div class="portfolio-item animate-on-scroll">
+                            <iframe src="https://www.behance.net/embed/project/229733255?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                        </div>
+                        <!-- Behance Item 5 -->
+                        <div class="portfolio-item animate-on-scroll">
+                            <iframe src="https://www.behance.net/embed/project/229171179?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                        </div>
+                        <!-- Behance Item 6 -->
+                        <div class="portfolio-item animate-on-scroll">
+                            <iframe src="https://www.behance.net/embed/project/233489765?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                        </div>
+                    </div>
                 </div>
-                <!-- Behance Item 2 -->
-                <div class="portfolio-item animate-on-scroll">
-                    <iframe src="https://www.behance.net/embed/project/230910193?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                </div>
-                <!-- Behance Item 3 -->
-                <div class="portfolio-item animate-on-scroll">
-                    <iframe src="https://www.behance.net/embed/project/229871467?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                </div>
-                <!-- Behance Item 4 -->
-                <div class="portfolio-item animate-on-scroll">
-                    <iframe src="https://www.behance.net/embed/project/229733255?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                </div>
-                <!-- Behance Item 5 -->
-                <div class="portfolio-item animate-on-scroll">
-                    <iframe src="https://www.behance.net/embed/project/229171179?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                </div>
-                <!-- Behance Item 6 -->
-                <div class="portfolio-item animate-on-scroll">
-                    <iframe src="https://www.behance.net/embed/project/233489765?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text animate-on-scroll">
-                    <h2 class="section-title" style="color: var(--primary);">About Me</h2>
-                    <p>With over 8 years of experience, I’m a professional UI/UX Designer specializing in creating user-centric and conversion-focused digital experiences for SaaS, eCommerce, and tech products. I turn complex ideas into intuitive, high-performing interfaces that are both functional and beautiful.</p>
-                    <p>Having completed over 200 projects for global clients, I leverage a structured design process using tools like Figma, Adobe XD, and Sketch. My deep understanding of user behavior allows me to craft responsive designs that not only look stunning but also drive real engagement and results.</p>
+            <!-- About Section -->
+            <section class="about" id="about">
+                <div class="container">
+                    <div class="about-content">
+                        <div class="about-text animate-on-scroll">
+                            <h2 class="section-title" style="color: var(--primary);">About Me</h2>
+                            <p>With over 8 years of experience, I’m a professional UI/UX Designer specializing in creating user-centric and conversion-focused digital experiences for SaaS, eCommerce, and tech products. I turn complex ideas into intuitive, high-performing interfaces that are both functional and beautiful.</p>
+                            <p>Having completed over 200 projects for global clients, I leverage a structured design process using tools like Figma, Adobe XD, and Sketch. My deep understanding of user behavior allows me to craft responsive designs that not only look stunning but also drive real engagement and results.</p>
+                        </div>
+                        <div class="about-highlights animate-on-scroll">
+                            <div class="highlight">
+                                <span class="highlight-number">8+</span>
+                                <span class="highlight-text">Years of Experience</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-number">200+</span>
+                                <span class="highlight-text">Successful Projects</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-number">Global</span>
+                                <span class="highlight-text">Client Partnerships</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-number">Figma</span>
+                                <span class="highlight-text">Design Specialist</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="about-highlights animate-on-scroll">
-                    <div class="highlight">
-                        <span class="highlight-number">8+</span>
-                        <span class="highlight-text">Years of Experience</span>
-                    </div>
-                    <div class="highlight">
-                        <span class="highlight-number">200+</span>
-                        <span class="highlight-text">Successful Projects</span>
-                    </div>
-                    <div class="highlight">
-                        <span class="highlight-number">Global</span>
-                        <span class="highlight-text">Client Partnerships</span>
-                    </div>
-                    <div class="highlight">
-                        <span class="highlight-number">Figma</span>
-                        <span class="highlight-text">Design Specialist</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Useful Links Section -->
-    <section class="useful-links" id="useful-links">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <h2 class="section-title">Useful Links</h2>
-                <p class="section-subtitle">Here are some platforms where you can find more of my work and connect with me.</p>
-            </div>
-            <div class="useful-links-grid">
-                <a href="https://www.figma.com/design/pQFkPj3oinV4mE1npsg88T/Website-showcase" class="link-card animate-on-scroll" target="_blank">
-                    <div class="link-icon-wrapper">
-                        <i class="fab fa-figma"></i>
+            <!-- Useful Links Section -->
+            <section class="useful-links" id="useful-links">
+                <div class="container">
+                    <div class="section-header animate-on-scroll">
+                        <h2 class="section-title">Useful Links</h2>
+                        <p class="section-subtitle">Here are some platforms where you can find more of my work and connect with me.</p>
                     </div>
-                    <div class="link-content">
-                        <h3 class="link-title">Figma Showcase</h3>
-                        <p class="link-desc">A complete collection of my best website designs and UI projects.</p>
-                    </div>
-                </a>
-                <a href="https://www.behance.net/sabbirhos" class="link-card animate-on-scroll" target="_blank">
-                    <div class="link-icon-wrapper">
-                        <i class="fab fa-behance"></i>
-                    </div>
-                    <div class="link-content">
-                        <h3 class="link-title">Behance Portfolio</h3>
-                        <p class="link-desc">In-depth case studies and featured creative projects.</p>
-                    </div>
-                </a>
-                <a href="https://dribbble.com/sabbirhosux" class="link-card animate-on-scroll" target="_blank">
-                    <div class="link-icon-wrapper">
-                        <i class="fab fa-dribbble"></i>
-                    </div>
-                    <div class="link-content">
-                        <h3 class="link-title">Dribbble Shots</h3>
-                        <p class="link-desc">Daily design inspiration, UI components, and creative explorations.</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="contact-glass-content">
-            <h2 class="contact-title animate-on-scroll">Let’s build something exceptional.</h2>
-            <p class="contact-subtitle animate-on-scroll">Currently available for freelance and remote UI/UX design opportunities. Ready to bring your vision to life?</p>
-            <div class="contact-methods">
-                <a href="mailto:sabbirahmed4585@gmail.com" class="contact-method animate-on-scroll">
-                    <i class="fas fa-envelope contact-icon"></i>
-                    <div class="contact-info">Email Me</div>
-                    <div class="contact-desc">sabbirahmed4585@gmail.com</div>
-                </a>
-                <a href="tel:+8801840642251" class="contact-method animate-on-scroll">
-                    <i class="fas fa-phone contact-icon"></i>
-                    <div class="contact-info">Call Me</div>
-                    <div class="contact-desc">+880 1840642251</div>
-                </a>
-            </div>
-            <div class="hero-buttons animate-on-scroll" style="margin-top: 2rem;">
-                <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn btn-primary" target="_blank">
-                    <i class="fas fa-calendar-check"></i>
-                    Schedule a Consultation
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-glass-content">
-            <div class="footer-content">
-                <div class="footer-main">
-                    <div class="footer-info">
-                        <div class="logo">Sabbir Hosen</div>
-                        <p>Professional UI/UX Designer crafting exceptional digital experiences.</p>
-                    </div>
-                    <div class="footer-social">
-                        <a href="https://www.figma.com/design/pQFkPj3oinV4mE1npsg88T/Website-showcase" target="_blank" aria-label="Figma"><i class="fab fa-figma"></i></a>
-                        <a href="https://www.behance.net/sabbirhos" target="_blank" aria-label="Behance"><i class="fab fa-behance"></i></a>
-                        <a href="https://dribbble.com/sabbirhosux" target="_blank" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                    <div class="useful-links-grid">
+                        <a href="https://www.figma.com/design/pQFkPj3oinV4mE1npsg88T/Website-showcase" class="link-card animate-on-scroll" target="_blank">
+                            <div class="link-icon-wrapper">
+                                <i class="fab fa-figma"></i>
+                            </div>
+                            <div class="link-content">
+                                <h3 class="link-title">Figma Showcase</h3>
+                                <p class="link-desc">A complete collection of my best website designs and UI projects.</p>
+                            </div>
+                        </a>
+                        <a href="https://www.behance.net/sabbirhos" class="link-card animate-on-scroll" target="_blank">
+                            <div class="link-icon-wrapper">
+                                <i class="fab fa-behance"></i>
+                            </div>
+                            <div class="link-content">
+                                <h3 class="link-title">Behance Portfolio</h3>
+                                <p class="link-desc">In-depth case studies and featured creative projects.</p>
+                            </div>
+                        </a>
+                        <a href="https://dribbble.com/sabbirhosux" class="link-card animate-on-scroll" target="_blank">
+                            <div class="link-icon-wrapper">
+                                <i class="fab fa-dribbble"></i>
+                            </div>
+                            <div class="link-content">
+                                <h3 class="link-title">Dribbble Shots</h3>
+                                <p class="link-desc">Daily design inspiration, UI components, and creative explorations.</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
-                <div class="copyright">
-                    <p>&copy; 2025 Sabbir Hosen. All rights reserved.</p>
+            </section>
+
+            <!-- New Contact Section -->
+            <section class="contact" id="contact">
+                <div class="container">
+                    <div class="contact-wrapper animate-on-scroll">
+                        <div class="contact-text">
+                            <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                                 <h2 class="section-title">Let’s build something exceptional.</h2>
+                                 <p class="section-subtitle" style="margin-left: 0; max-width: 100%;">Currently available for freelance and remote UI/UX design opportunities. Ready to bring your vision to life?</p>
+                            </div>
+                            <div class="contact-details">
+                                 <a href="mailto:sabbirahmed4585@gmail.com" class="contact-detail-item">
+                                     <div class="contact-icon-wrapper"><i class="fas fa-envelope"></i></div>
+                                     <div>
+                                         <h4>Email Me</h4>
+                                         <span>sabbirahmed4585@gmail.com</span>
+                                     </div>
+                                 </a>
+                                 <a href="tel:+8801840642251" class="contact-detail-item">
+                                     <div class="contact-icon-wrapper"><i class="fas fa-phone"></i></div>
+                                     <div>
+                                         <h4>Call Me</h4>
+                                         <span>+880 1840642251</span>
+                                     </div>
+                                 </a>
+                            </div>
+                        </div>
+                        <div class="contact-form-wrapper">
+                             <h3>Send me a message</h3>
+                             <form action="#" method="POST">
+                                 <div class="form-group">
+                                     <input type="text" name="name" placeholder="Your Name" required>
+                                 </div>
+                                 <div class="form-group">
+                                     <input type="email" name="email" placeholder="Your Email" required>
+                                 </div>
+                                 <div class="form-group">
+                                     <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                                 </div>
+                                 <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                    <i class="fas fa-paper-plane"></i> Send Message
+                                 </button>
+                             </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="container">
+                    <div class="footer-grid">
+                        <!-- Column 1: About -->
+                        <div class="footer-col">
+                            <div class="logo">Sabbir Hosen</div>
+                            <p class="footer-about">Professional UI/UX Designer crafting exceptional digital experiences.</p>
+                             <div class="footer-social">
+                                <a href="https://www.figma.com/design/pQFkPj3oinV4mE1npsg88T/Website-showcase" target="_blank" aria-label="Figma"><i class="fab fa-figma"></i></a>
+                                <a href="https://www.behance.net/sabbirhos" target="_blank" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                                <a href="https://dribbble.com/sabbirhosux" target="_blank" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                            </div>
+                        </div>
+                        <!-- Column 2: Quick Links -->
+                        <div class="footer-col">
+                            <h4 class="footer-heading">Quick Links</h4>
+                            <ul class="footer-links">
+                                <li><a href="#home">Home</a></li>
+                                <li><a href="#services">Services</a></li>
+                                <li><a href="#portfolio">Portfolio</a></li>
+                                <li><a href="#about">About</a></li>
+                                <li><a href="#contact">Contact</a></li>
+                            </ul>
+                        </div>
+                        <!-- Column 3: Services -->
+                        <div class="footer-col">
+                             <h4 class="footer-heading">Services</h4>
+                             <ul class="footer-links">
+                                 <li><a href="#services">Logo Design</a></li>
+                                 <li><a href="#services">Landing Page Design</a></li>
+                                 <li><a href="#services">Mobile App Design</a></li>
+                                 <li><a href="#services">Website Design</a></li>
+                                 <li><a href="#services">Design + Development</a></li>
+                             </ul>
+                        </div>
+                        <!-- Column 4: Contact -->
+                        <div class="footer-col">
+                             <h4 class="footer-heading">Contact</h4>
+                             <ul class="footer-contact">
+                                 <li><i class="fas fa-envelope"></i> sabbirahmed4585@gmail.com</li>
+                                 <li><i class="fas fa-phone"></i> +880 1840642251</li>
+                             </ul>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>&copy; 2025 Sabbir Hosen. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
         </div>
-    </footer>
+    </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- START: Smooth Scroll Logic ---
+            const body = document.body;
+            const smoothContent = document.querySelector('#smooth-content');
+            
+            if (smoothContent) {
+                let scrollState = {
+                    target: window.scrollY,
+                    current: window.scrollY,
+                    ease: 0.075,
+                    height: 0,
+                };
+
+                function initSmoothScroll() {
+                    scrollState.height = smoothContent.getBoundingClientRect().height;
+                    body.style.height = `${scrollState.height}px`;
+                }
+
+                function smoothScrollUpdate() {
+                    scrollState.target = window.scrollY;
+                    scrollState.current += (scrollState.target - scrollState.current) * scrollState.ease;
+                    smoothContent.style.transform = `translate3d(0, -${scrollState.current.toFixed(2)}px, 0)`;
+                    requestAnimationFrame(smoothScrollUpdate);
+                }
+
+                initSmoothScroll();
+                smoothScrollUpdate();
+                window.addEventListener('resize', initSmoothScroll);
+            }
+            // --- END: Smooth Scroll Logic ---
+
             // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
