@@ -14,7 +14,7 @@
         }
 
         :root {
-            /* New Color Scheme from your image: Blue, Purple, Cyan, and Yellow */
+            /* New Color Scheme: Blue, Purple, Cyan, and Yellow */
             --primary: #3b82f6; /* Vibrant Blue */
             --primary-dark: #2563eb; /* Darker Blue */
             --secondary: #a855f7; /* Purple */
@@ -31,8 +31,11 @@
             --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+        
+        html {
+            scroll-behavior: smooth;
+        }
 
-        /* Removed scroll-behavior from html to allow JS to control it */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
@@ -40,56 +43,46 @@
             overflow-x: hidden;
             background-color: var(--gray-100);
         }
-        
-        /* Smooth Scroll Styles */
-        #smooth-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
 
-        #smooth-content {
-            will-change: transform; /* Performance optimization */
-        }
-
-
-        /* Header */
+        /* --- HEADER / NAVBAR STYLES --- */
         .header {
             position: fixed;
-            top: 0;
+            top: 20px; /* Position from the top */
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             z-index: 1000;
-            padding: 1rem 0;
+            display: flex;
+            justify-content: center; /* Center the nav container */
             transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        }
-        
-        .header.scrolled {
-            background: rgba(255, 255, 255, 0.5);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: var(--shadow);
         }
 
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            width: 100%;
+            max-width: 1200px; /* Control the max width */
+            margin: 0 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 0.75rem 2rem;
+            border-radius: 50px; /* Rounded corners */
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
         }
+        
+        .header.scrolled .nav-container {
+            background: rgba(255, 255, 255, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
 
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--primary-dark);
         }
 
         .nav-links {
@@ -100,7 +93,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--gray-500);
+            color: var(--gray-700);
             font-weight: 500;
             transition: color 0.3s ease;
             position: relative;
@@ -146,7 +139,6 @@
             box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
         }
         
-        /* General Button Styles from reference */
         .btn {
             position: relative;
             overflow: hidden;
@@ -176,11 +168,12 @@
             cursor: pointer;
         }
 
-        /* Hero Section */
+        /* --- HERO SECTION --- */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
+            justify-content: center;
             background-image: url('Gradient _46.jpg');
             background-size: cover;
             background-position: center;
@@ -188,28 +181,24 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            padding: 100px 0; /* Added top/bottom padding */
+            padding: 120px 0 40px;
         }
 
         .hero::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            /* The texture pattern was removed to let the gradient background shine */
             opacity: 0.05;
         }
 
         .hero-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 2rem;
             position: relative;
             z-index: 2;
-            /* Added a subtle backdrop for text readability */
             background: rgba(0,0,0,0.2);
             border-radius: 20px;
-            padding-top: 2rem;
-            padding-bottom: 2rem;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
@@ -294,6 +283,16 @@
             box-shadow: var(--shadow-lg);
             border: 1px solid transparent;
         }
+        
+        .btn-primary.btn-colorful {
+            background: var(--gradient);
+            color: white;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary.btn-colorful:hover {
+             box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
 
         .btn-primary:hover {
             background: var(--gradient);
@@ -325,10 +324,8 @@
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
 
-        /* Services Section */
         .services {
             padding: 6rem 0;
-            /* background: var(--gray-100); No longer needed, moved to body */
         }
 
         .container {
@@ -440,17 +437,14 @@
             text-align: center;
         }
 
-        /* Portfolio Section */
         .portfolio {
             padding: 6rem 0;
-            /* Added background for glassmorphism effect to be visible */
-            background-image: url('Gradient _46.jpg'); /* Using hero background for consistency */
+            background-image: url('Gradient _46.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
 
-        /* Make portfolio header text readable on the new background */
         .portfolio .section-title,
         .portfolio .section-subtitle {
             color: var(--white);
@@ -459,20 +453,18 @@
 
         .portfolio-grid {
             display: grid;
-            /* Adjusted to better fit iframe content */
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
         
         .portfolio-item {
-            /* Enhanced Glassmorphism Effect */
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 15px;
-            overflow: hidden; /* Important for keeping iframes within rounded corners */
+            overflow: hidden;
             box-shadow: var(--shadow);
             position: relative;
             transition: all 0.3s ease;
@@ -483,15 +475,12 @@
             box-shadow: var(--shadow-lg);
         }
 
-        /* Styling for the iframe inside the portfolio item */
         .portfolio-item iframe {
             display: block;
             width: 100%;
-            border: none; /* remove default iframe border */
+            border: none;
         }
 
-
-        /* About Section */
         .about {
             padding: 6rem 0;
             background: white;
@@ -518,6 +507,7 @@
             gap: 2rem;
         }
 
+        /* --- HIGHLIGHT CARD EFFECT --- */
         .highlight {
             text-align: center;
             padding: 1.5rem;
@@ -542,10 +532,10 @@
 
         .highlight-text {
             font-size: 0.9rem;
-            opacity: 0.8;
+            color: var(--gray-800);
         }
-
-        /* Useful Links Section */
+        
+        /* --- USEFUL LINKS SECTION --- */
         .useful-links {
             padding: 6rem 0;
             background: var(--gray-100);
@@ -553,8 +543,8 @@
 
         .useful-links-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
             margin-top: 3rem;
         }
 
@@ -568,7 +558,7 @@
             color: inherit;
             position: relative;
             transition: all 0.3s ease;
-            padding: 2rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -582,32 +572,24 @@
         }
 
         .link-icon-wrapper {
-            height: 80px;
-            width: 80px;
+            height: 60px;
+            width: 60px;
             background: var(--gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--white);
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            margin-bottom: 1rem;
         }
 
         .link-title {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--dark);
-            margin-bottom: 0.5rem;
         }
-
-        .link-desc {
-            color: var(--gray-500);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        /* New Contact Section */
+        
         .contact {
             padding: 6rem 0;
             background: white;
@@ -717,8 +699,6 @@
             resize: vertical;
         }
 
-
-        /* Footer */
         .footer {
             background-color: var(--dark);
             color: var(--gray-300);
@@ -817,8 +797,45 @@
         }
 
 
-        /* Responsive Design */
         @media (max-width: 992px) {
+            .nav-links, .cta-btn {
+                display: none;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+            .nav-container {
+                max-width: 100%;
+                margin: 0 1rem;
+            }
+            
+            .main-nav .nav-links {
+                display: none;
+                position: absolute;
+                top: calc(100% + 10px);
+                left: 1rem;
+                right: 1rem;
+                background: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 1.5rem;
+                box-shadow: var(--shadow-lg);
+                gap: 1.5rem;
+                text-align: center;
+                border-radius: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .main-nav.active .nav-links {
+                display: flex;
+            }
+
+            .main-nav .nav-links a {
+                color: var(--dark);
+                font-weight: 600;
+            }
+            
             .contact-wrapper {
                 grid-template-columns: 1fr;
                 padding: 2.5rem;
@@ -831,37 +848,10 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.5);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                flex-direction: column;
-                padding: 1.5rem;
-                box-shadow: var(--shadow-lg);
-                gap: 1.5rem;
-                text-align: center;
-                border-bottom-left-radius: 20px;
-                border-bottom-right-radius: 20px;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-
-            .mobile-toggle {
-                display: block;
-            }
-
             .hero h1 {
                 font-size: 2.5rem;
             }
-
+            
             .hero-stats {
                 flex-direction: column;
                 gap: 1.5rem;
@@ -883,6 +873,10 @@
             
             .services-grid, .portfolio-grid, .useful-links-grid {
                  grid-template-columns: 1fr;
+            }
+
+            .useful-links-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .contact-wrapper {
@@ -922,7 +916,6 @@
             }
         }
 
-        /* Scroll animations */
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(50px);
@@ -937,11 +930,10 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="nav-container">
             <div class="logo">Sabbir Hosen</div>
-            <nav>
+            <nav class="main-nav">
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#services">Services</a></li>
@@ -951,399 +943,354 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
+             <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="cta-btn" id="desktop-cta" target="_blank">Book a Call</a>
              <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
-            <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="cta-btn" id="desktop-cta" target="_blank">Book a Call</a>
         </div>
     </header>
 
-    <div id="smooth-wrapper">
-        <div id="smooth-content">
-            <!-- Hero Section -->
-            <section class="hero" id="home">
-                <div class="hero-content">
-                    <div class="hero-avatar fade-in"></div>
-                    <h1 class="fade-in">Sabbir Hosen</h1>
-                    <p class="hero-subtitle fade-in">Professional UI/UX Designer creating user-centric, visually appealing, and conversion-focused digital experiences.</p>
-                    <div class="hero-stats fade-in">
-                        <div class="stat">
-                            <span class="stat-number">8+</span>
-                            <span class="stat-label">Years Experience</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">200+</span>
-                            <span class="stat-label">Projects Completed</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">Global</span>
-                            <span class="stat-label">Client Reach</span>
-                        </div>
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <div class="hero-avatar fade-in"></div>
+                <h1 class="fade-in">Sabbir Hosen</h1>
+                <p class="hero-subtitle fade-in">Professional UI/UX Designer creating user-centric, visually appealing, and conversion-focused digital experiences.</p>
+                <div class="hero-stats fade-in">
+                    <div class="stat">
+                        <span class="stat-number">8+</span>
+                        <span class="stat-label">Years Experience</span>
                     </div>
-                    <div class="hero-buttons fade-in">
-                        <a href="#portfolio" class="btn btn-primary">
-                            <i class="fas fa-palette"></i>
-                            View Portfolio
-                        </a>
-                        <a href="#contact" class="btn btn-secondary">
-                            <i class="fas fa-paper-plane"></i>
-                            Let's Talk
-                        </a>
+                    <div class="stat">
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Projects Completed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">Global</span>
+                        <span class="stat-label">Client Reach</span>
                     </div>
                 </div>
-            </section>
+                <div class="hero-buttons fade-in">
+                    <a href="#portfolio" class="btn btn-primary">
+                        <i class="fas fa-palette"></i>
+                        View Portfolio
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-paper-plane"></i>
+                        Let's Talk
+                    </a>
+                </div>
+            </div>
+        </section>
 
-            <!-- Services Section -->
-            <section class="services" id="services">
-                <div class="container">
-                    <div class="section-header animate-on-scroll">
-                        <h2 class="section-title">My Services</h2>
-                        <p class="section-subtitle">Crafting clean, modern, and efficient design systems that deliver real impact.</p>
+        <section class="services" id="services">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <h2 class="section-title">My Services</h2>
+                    <p class="section-subtitle">Crafting clean, modern, and efficient design systems that deliver real impact.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon"><i class="fas fa-star"></i></div>
+                        <h3 class="service-title">Logo Design</h3>
+                        <p class="service-description">Custom logo design with multiple variations and brand guidelines.</p>
+                        <div class="service-price">$150</div>
+                        <ul class="service-features">
+                            <li>Multiple concept variations</li>
+                            <li>Unlimited revisions</li>
+                            <li>All source files included</li>
+                            <li>Brand guidelines</li>
+                    </ul>
+                     <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
                     </div>
-                    <div class="services-grid">
-                        <!-- Service Card 1 -->
-                        <div class="service-card animate-on-scroll">
-                            <div class="service-icon"><i class="fas fa-star"></i></div>
-                            <h3 class="service-title">Logo Design</h3>
-                            <p class="service-description">Custom logo design with multiple variations and brand guidelines.</p>
-                            <div class="service-price">$150</div>
-                            <ul class="service-features">
-                                <li>Multiple concept variations</li>
-                                <li>Unlimited revisions</li>
-                                <li>All source files included</li>
-                                <li>Brand guidelines</li>
-                        </ul>
-                         <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
-                        </div>
-                        <!-- Service Card 2 -->
-                        <div class="service-card animate-on-scroll">
-                            <div class="service-icon"><i class="fas fa-globe"></i></div>
-                            <h3 class="service-title">Landing Page Design</h3>
-                            <p class="service-description">Conversion-optimized landing pages that turn visitors into customers.</p>
-                            <div class="service-price">$199</div>
-                            <ul class="service-features">
-                                <li>Mobile responsive design</li>
-                                <li>Conversion optimized</li>
-                                <li>Additional pages: $100 each</li>
-                                <li>SEO structure included</li>
-                        </ul>
-                         <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
-                        </div>
-                        <!-- Service Card 3 -->
-                        <div class="service-card animate-on-scroll">
-                            <div class="service-icon"><i class="fas fa-desktop"></i></div>
-                            <h3 class="service-title">SaaS Landing Page</h3>
-                            <p class="service-description">Feature-rich SaaS landing pages with pricing tables and trial CTAs.</p>
-                            <div class="service-price">$299</div>
-                            <ul class="service-features">
-                                <li>Feature highlighting</li>
-                                <li>Pricing table integration</li>
-                                <li>Free trial CTAs</li>
-                                <li>User journey optimized</li>
-                        </ul>
-                         <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
-                        </div>
-                        <!-- Service Card 4 -->
-                        <div class="service-card animate-on-scroll">
-                            <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-                            <h3 class="service-title">Mobile App Design</h3>
-                            <p class="service-description">Complete mobile app UI/UX design for iOS and Android.</p>
-                            <div class="service-price">$599</div>
-                            <ul class="service-features">
-                                <li>10 custom app screens</li>
-                                <li>iOS & Android guidelines</li>
-                                <li>Interactive prototype</li>
-                                <li>Additional screens: $50 each</li>
-                        </ul>
-                         <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
-                        </div>
-                        <!-- Service Card 5 -->
-                        <div class="service-card animate-on-scroll">
-                            <div class="service-icon"><i class="fas fa-layer-group"></i></div>
-                            <h3 class="service-title">Complete Website Design</h3>
-                            <p class="service-description">Full website solution with consistent brand identity.</p>
-                            <div class="service-price">$499</div>
-                            <ul class="service-features">
-                                <li>5 pages included</li>
-                                <li>Consistent brand identity</li>
-                                <li>User journey optimized</li>
-                                <li>Additional pages: $200 each</li>
-                        </ul>
-                         <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
-                        </div>
-                        <!-- Service Card 6 -->
-                        <div class="service-card animate-on-scroll">
-                            <div class="service-icon"><i class="fas fa-code"></i></div>
-                            <h3 class="service-title">Design + Development</h3>
-                            <p class="service-description">Complete solution from design to live website deployment.</p>
-                            <div class="service-price">$999</div>
-                            <ul class="service-features">
-                                <li>Full website solution</li>
-                                <li>Live deployment</li>
-                                <li>CMS integration</li>
-                                <li>SEO optimized</li>
-                        </ul>
-                            <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
-                        </div>
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon"><i class="fas fa-globe"></i></div>
+                        <h3 class="service-title">Landing Page Design</h3>
+                        <p class="service-description">Conversion-optimized landing pages that turn visitors into customers.</p>
+                        <div class="service-price">$199</div>
+                        <ul class="service-features">
+                            <li>Mobile responsive design</li>
+                            <li>Conversion optimized</li>
+                            <li>Additional pages: $100 each</li>
+                            <li>SEO structure included</li>
+                    </ul>
+                     <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
+                    </div>
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon"><i class="fas fa-desktop"></i></div>
+                        <h3 class="service-title">SaaS Landing Page</h3>
+                        <p class="service-description">Feature-rich SaaS landing pages with pricing tables and trial CTAs.</p>
+                        <div class="service-price">$299</div>
+                        <ul class="service-features">
+                            <li>Feature highlighting</li>
+                            <li>Pricing table integration</li>
+                            <li>Free trial CTAs</li>
+                            <li>User journey optimized</li>
+                    </ul>
+                     <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
+                    </div>
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <h3 class="service-title">Mobile App Design</h3>
+                        <p class="service-description">Complete mobile app UI/UX design for iOS and Android.</p>
+                        <div class="service-price">$599</div>
+                        <ul class="service-features">
+                            <li>10 custom app screens</li>
+                            <li>iOS & Android guidelines</li>
+                            <li>Interactive prototype</li>
+                            <li>Additional screens: $50 each</li>
+                    </ul>
+                     <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
+                    </div>
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon"><i class="fas fa-layer-group"></i></div>
+                        <h3 class="service-title">Complete Website Design</h3>
+                        <p class="service-description">Full website solution with consistent brand identity.</p>
+                        <div class="service-price">$499</div>
+                        <ul class="service-features">
+                            <li>5 pages included</li>
+                            <li>Consistent brand identity</li>
+                            <li>User journey optimized</li>
+                            <li>Additional pages: $200 each</li>
+                    </ul>
+                     <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
+                    </div>
+                    <div class="service-card animate-on-scroll">
+                        <div class="service-icon"><i class="fas fa-code"></i></div>
+                        <h3 class="service-title">Design + Development</h3>
+                        <p class="service-description">Complete solution from design to live website deployment.</p>
+                        <div class="service-price">$999</div>
+                        <ul class="service-features">
+                            <li>Full website solution</li>
+                            <li>Live deployment</li>
+                            <li>CMS integration</li>
+                            <li>SEO optimized</li>
+                    </ul>
+                        <a href="https://calendly.com/hosguljar/30min?month=2025-09" class="btn cta-btn" target="_blank">Book a Call</a>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Portfolio Section -->
-            <section class="portfolio" id="portfolio">
-                <div class="container">
-                    <div class="section-header animate-on-scroll">
-                        <h2 class="section-title">Portfolio & Work</h2>
-                        <p class="section-subtitle">Explore a selection of my latest projects and creative solutions.</p>
+        <section class="portfolio" id="portfolio">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <h2 class="section-title">Portfolio & Work</h2>
+                    <p class="section-subtitle">Explore a selection of my latest projects and creative solutions.</p>
+                </div>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item animate-on-scroll">
+                        <iframe src="https://www.behance.net/embed/project/231232393?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
                     </div>
-                    <div class="portfolio-grid">
-                         <!-- Behance Item 1 -->
-                        <div class="portfolio-item animate-on-scroll">
-                            <iframe src="https://www.behance.net/embed/project/231232393?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                        </div>
-                        <!-- Behance Item 2 -->
-                        <div class="portfolio-item animate-on-scroll">
-                            <iframe src="https://www.behance.net/embed/project/230910193?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                        </div>
-                        <!-- Behance Item 3 -->
-                        <div class="portfolio-item animate-on-scroll">
-                            <iframe src="https://www.behance.net/embed/project/229871467?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                        </div>
-                        <!-- Behance Item 4 -->
-                        <div class="portfolio-item animate-on-scroll">
-                            <iframe src="https://www.behance.net/embed/project/229733255?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                        </div>
-                        <!-- Behance Item 5 -->
-                        <div class="portfolio-item animate-on-scroll">
-                            <iframe src="https://www.behance.net/embed/project/229171179?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                        </div>
-                        <!-- Behance Item 6 -->
-                        <div class="portfolio-item animate-on-scroll">
-                            <iframe src="https://www.behance.net/embed/project/233489765?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
-                        </div>
+                    <div class="portfolio-item animate-on-scroll">
+                        <iframe src="https://www.behance.net/embed/project/230910193?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="portfolio-item animate-on-scroll">
+                        <iframe src="https://www.behance.net/embed/project/229871467?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="portfolio-item animate-on-scroll">
+                        <iframe src="https://www.behance.net/embed/project/229733255?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="portfolio-item animate-on-scroll">
+                        <iframe src="https://www.behance.net/embed/project/229171179?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
+                    </div>
+                    <div class="portfolio-item animate-on-scroll">
+                        <iframe src="https://www.behance.net/embed/project/233489765?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- About Section -->
-            <section class="about" id="about">
-                <div class="container">
-                    <div class="about-content">
-                        <div class="about-text animate-on-scroll">
-                            <h2 class="section-title" style="color: var(--primary);">About Me</h2>
-                            <p>With over 8 years of experience, I’m a professional UI/UX Designer specializing in creating user-centric and conversion-focused digital experiences for SaaS, eCommerce, and tech products. I turn complex ideas into intuitive, high-performing interfaces that are both functional and beautiful.</p>
-                            <p>Having completed over 200 projects for global clients, I leverage a structured design process using tools like Figma, Adobe XD, and Sketch. My deep understanding of user behavior allows me to craft responsive designs that not only look stunning but also drive real engagement and results.</p>
+        <section class="about" id="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text animate-on-scroll">
+                        <h2 class="section-title" style="color: var(--primary);">About Me</h2>
+                        <p>With over 8 years of experience, I’m a professional UI/UX Designer specializing in creating user-centric and conversion-focused digital experiences for SaaS, eCommerce, and tech products. I turn complex ideas into intuitive, high-performing interfaces that are both functional and beautiful.</p>
+                        <p>Having completed over 200 projects for global clients, I leverage a structured design process using tools like Figma, Adobe XD, and Sketch. My deep understanding of user behavior allows me to craft responsive designs that not only look stunning but also drive real engagement and results.</p>
+                    </div>
+                    <div class="about-highlights animate-on-scroll">
+                        <div class="highlight">
+                           <div class="highlight-content">
+                               <span class="highlight-number">8+</span>
+                               <span class="highlight-text">Years of Experience</span>
+                           </div>
                         </div>
-                        <div class="about-highlights animate-on-scroll">
-                            <div class="highlight">
-                                <span class="highlight-number">8+</span>
-                                <span class="highlight-text">Years of Experience</span>
-                            </div>
-                            <div class="highlight">
+                        <div class="highlight">
+                           <div class="highlight-content">
                                 <span class="highlight-number">200+</span>
                                 <span class="highlight-text">Successful Projects</span>
-                            </div>
-                            <div class="highlight">
+                           </div>
+                        </div>
+                        <div class="highlight">
+                           <div class="highlight-content">
                                 <span class="highlight-number">Global</span>
                                 <span class="highlight-text">Client Partnerships</span>
-                            </div>
-                            <div class="highlight">
+                           </div>
+                        </div>
+                        <div class="highlight">
+                           <div class="highlight-content">
                                 <span class="highlight-number">Figma</span>
                                 <span class="highlight-text">Design Specialist</span>
-                            </div>
+                           </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Useful Links Section -->
-            <section class="useful-links" id="useful-links">
-                <div class="container">
-                    <div class="section-header animate-on-scroll">
-                        <h2 class="section-title">Useful Links</h2>
-                        <p class="section-subtitle">Here are some platforms where you can find more of my work and connect with me.</p>
-                    </div>
-                    <div class="useful-links-grid">
-                        <a href="https://www.figma.com/design/pQFkPj3oinV4mE1npsg88T/Website-showcase" class="link-card animate-on-scroll" target="_blank">
-                            <div class="link-icon-wrapper">
-                                <i class="fab fa-figma"></i>
-                            </div>
-                            <div class="link-content">
-                                <h3 class="link-title">Figma Showcase</h3>
-                                <p class="link-desc">A complete collection of my best website designs and UI projects.</p>
-                            </div>
-                        </a>
-                        <a href="https://www.behance.net/sabbirhos" class="link-card animate-on-scroll" target="_blank">
-                            <div class="link-icon-wrapper">
-                                <i class="fab fa-behance"></i>
-                            </div>
-                            <div class="link-content">
-                                <h3 class="link-title">Behance Portfolio</h3>
-                                <p class="link-desc">In-depth case studies and featured creative projects.</p>
-                            </div>
-                        </a>
-                        <a href="https://dribbble.com/sabbirhosux" class="link-card animate-on-scroll" target="_blank">
-                            <div class="link-icon-wrapper">
-                                <i class="fab fa-dribbble"></i>
-                            </div>
-                            <div class="link-content">
-                                <h3 class="link-title">Dribbble Shots</h3>
-                                <p class="link-desc">Daily design inspiration, UI components, and creative explorations.</p>
-                            </div>
-                        </a>
-                    </div>
+        <section class="useful-links" id="useful-links">
+            <div class="container">
+                <div class="section-header animate-on-scroll">
+                    <h2 class="section-title">Useful Links</h2>
+                    <p class="section-subtitle">Here are some platforms where you can find more of my work and connect with me.</p>
                 </div>
-            </section>
+                <div class="useful-links-grid">
+                    <a href="https://www.figma.com/design/pQFkPj3oinV4mE1npsg88T/Website-showcase" class="link-card animate-on-scroll" target="_blank">
+                        <div class="link-icon-wrapper">
+                            <i class="fab fa-figma"></i>
+                        </div>
+                        <div class="link-content">
+                            <h3 class="link-title">Figma Showcase</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.behance.net/sabbirhos" class="link-card animate-on-scroll" target="_blank">
+                        <div class="link-icon-wrapper">
+                            <i class="fab fa-behance"></i>
+                        </div>
+                        <div class="link-content">
+                            <h3 class="link-title">Behance</h3>
+                        </div>
+                    </a>
+                    <a href="https://dribbble.com/sabbirhosux" class="link-card animate-on-scroll" target="_blank">
+                        <div class="link-icon-wrapper">
+                            <i class="fab fa-dribbble"></i>
+                        </div>
+                        <div class="link-content">
+                            <h3 class="link-title">Dribbble</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.linkedin.com/in/sabbir-hosen-7667991b9/" class="link-card animate-on-scroll" target="_blank">
+                        <div class="link-icon-wrapper">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div class="link-content">
+                            <h3 class="link-title">LinkedIn</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
 
-            <!-- New Contact Section -->
-            <section class="contact" id="contact">
-                <div class="container">
-                    <div class="contact-wrapper animate-on-scroll">
-                        <div class="contact-text">
-                            <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
-                                 <h2 class="section-title">Let’s build something exceptional.</h2>
-                                 <p class="section-subtitle" style="margin-left: 0; max-width: 100%;">Currently available for freelance and remote UI/UX design opportunities. Ready to bring your vision to life?</p>
-                            </div>
-                            <div class="contact-details">
-                                 <a href="mailto:sabbirahmed4585@gmail.com" class="contact-detail-item">
-                                     <div class="contact-icon-wrapper"><i class="fas fa-envelope"></i></div>
-                                     <div>
-                                         <h4>Email Me</h4>
-                                         <span>sabbirahmed4585@gmail.com</span>
-                                     </div>
-                                 </a>
-                                 <a href="tel:+8801840642251" class="contact-detail-item">
-                                     <div class="contact-icon-wrapper"><i class="fas fa-phone"></i></div>
-                                     <div>
-                                         <h4>Call Me</h4>
-                                         <span>+880 1840642251</span>
-                                     </div>
-                                 </a>
-                            </div>
+        <section class="contact" id="contact">
+            <div class="container">
+                <div class="contact-wrapper animate-on-scroll">
+                    <div class="contact-text">
+                        <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                             <h2 class="section-title">Let’s build something exceptional.</h2>
+                             <p class="section-subtitle" style="margin-left: 0; max-width: 100%;">Currently available for freelance and remote UI/UX design opportunities. Ready to bring your vision to life?</p>
                         </div>
-                        <div class="contact-form-wrapper">
-                             <h3>Send me a message</h3>
-                             <form action="#" method="POST">
-                                 <div class="form-group">
-                                     <input type="text" name="name" placeholder="Your Name" required>
+                        <div class="contact-details">
+                             <a href="mailto:sabbirahmed4585@gmail.com" class="contact-detail-item">
+                                 <div class="contact-icon-wrapper"><i class="fas fa-envelope"></i></div>
+                                 <div>
+                                     <h4>Email Me</h4>
+                                     <span>sabbirahmed4585@gmail.com</span>
                                  </div>
-                                 <div class="form-group">
-                                     <input type="email" name="email" placeholder="Your Email" required>
+                             </a>
+                             <a href="tel:+8801840642251" class="contact-detail-item">
+                                 <div class="contact-icon-wrapper"><i class="fas fa-phone"></i></div>
+                                 <div>
+                                     <h4>Call Me</h4>
+                                     <span>+880 1840642251</span>
                                  </div>
-                                 <div class="form-group">
-                                     <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-                                 </div>
-                                 <button type="submit" class="btn btn-primary" style="width: 100%;">
-                                    <i class="fas fa-paper-plane"></i> Send Message
-                                 </button>
-                             </form>
+                             </a>
                         </div>
                     </div>
+                    <div class="contact-form-wrapper">
+                         <h3>Send me a message</h3>
+                         <form action="#" method="POST">
+                             <div class="form-group">
+                                 <input type="text" name="name" placeholder="Your Name" required>
+                             </div>
+                             <div class="form-group">
+                                 <input type="email" name="email" placeholder="Your Email" required>
+                             </div>
+                             <div class="form-group">
+                                 <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                             </div>
+                             <button type="submit" class="btn btn-primary btn-colorful" style="width: 100%;">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                             </button>
+                         </form>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Footer -->
-            <footer class="footer">
-                <div class="container">
-                    <div class="footer-grid">
-                        <!-- Column 1: About -->
-                        <div class="footer-col">
-                            <div class="logo">Sabbir Hosen</div>
-                            <p class="footer-about">Professional UI/UX Designer crafting exceptional digital experiences.</p>
-                             <div class="footer-social">
-                                <a href="https://www.figma.com/design/pQFkPj3oinV4mE1npsg88T/Website-showcase" target="_blank" aria-label="Figma"><i class="fab fa-figma"></i></a>
-                                <a href="https://www.behance.net/sabbirhos" target="_blank" aria-label="Behance"><i class="fab fa-behance"></i></a>
-                                <a href="https://dribbble.com/sabbirhosux" target="_blank" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
-                            </div>
-                        </div>
-                        <!-- Column 2: Quick Links -->
-                        <div class="footer-col">
-                            <h4 class="footer-heading">Quick Links</h4>
-                            <ul class="footer-links">
-                                <li><a href="#home">Home</a></li>
-                                <li><a href="#services">Services</a></li>
-                                <li><a href="#portfolio">Portfolio</a></li>
-                                <li><a href="#about">About</a></li>
-                                <li><a href="#contact">Contact</a></li>
-                            </ul>
-                        </div>
-                        <!-- Column 3: Services -->
-                        <div class="footer-col">
-                             <h4 class="footer-heading">Services</h4>
-                             <ul class="footer-links">
-                                 <li><a href="#services">Logo Design</a></li>
-                                 <li><a href="#services">Landing Page Design</a></li>
-                                 <li><a href="#services">Mobile App Design</a></li>
-                                 <li><a href="#services">Website Design</a></li>
-                                 <li><a href="#services">Design + Development</a></li>
-                             </ul>
-                        </div>
-                        <!-- Column 4: Contact -->
-                        <div class="footer-col">
-                             <h4 class="footer-heading">Contact</h4>
-                             <ul class="footer-contact">
-                                 <li><i class="fas fa-envelope"></i> sabbirahmed4585@gmail.com</li>
-                                 <li><i class="fas fa-phone"></i> +880 1840642251</li>
-                             </ul>
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <div class="logo">Sabbir Hosen</div>
+                        <p class="footer-about">Professional UI/UX Designer crafting exceptional digital experiences.</p>
+                         <div class="footer-social">
+                            <a href="https://www.figma.com/design/pQFkPj3oinV4mE1npsg88T/Website-showcase" target="_blank" aria-label="Figma"><i class="fab fa-figma"></i></a>
+                            <a href="https://www.behance.net/sabbirhos" target="_blank" aria-label="Behance"><i class="fab fa-behance"></i></a>
+                            <a href="https://dribbble.com/sabbirhosux" target="_blank" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                            <a href="https://www.linkedin.com/in/sabbir-hosen-7667991b9/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
                         </div>
                     </div>
-                    <div class="footer-bottom">
-                        <p>&copy; 2025 Sabbir Hosen. All rights reserved.</p>
+                    <div class="footer-col">
+                        <h4 class="footer-heading">Quick Links</h4>
+                        <ul class="footer-links">
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="#portfolio">Portfolio</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                         <h4 class="footer-heading">Services</h4>
+                         <ul class="footer-links">
+                             <li><a href="#services">Logo Design</a></li>
+                             <li><a href="#services">Landing Page Design</a></li>
+                             <li><a href="#services">Mobile App Design</a></li>
+                             <li><a href="#services">Website Design</a></li>
+                             <li><a href="#services">Design + Development</a></li>
+                         </ul>
+                    </div>
+                    <div class="footer-col">
+                         <h4 class="footer-heading">Contact</h4>
+                         <ul class="footer-contact">
+                             <li><i class="fas fa-envelope"></i> sabbirahmed4585@gmail.com</li>
+                             <li><i class="fas fa-phone"></i> +880 1840642251</li>
+                         </ul>
                     </div>
                 </div>
-            </footer>
-        </div>
-    </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Sabbir Hosen. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </main>
 
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- START: Smooth Scroll Logic ---
-            const body = document.body;
-            const smoothContent = document.querySelector('#smooth-content');
-            
-            if (smoothContent) {
-                let scrollState = {
-                    target: window.scrollY,
-                    current: window.scrollY,
-                    ease: 0.075,
-                    height: 0,
-                };
-
-                function initSmoothScroll() {
-                    scrollState.height = smoothContent.getBoundingClientRect().height;
-                    body.style.height = `${scrollState.height}px`;
-                }
-
-                function smoothScrollUpdate() {
-                    scrollState.target = window.scrollY;
-                    scrollState.current += (scrollState.target - scrollState.current) * scrollState.ease;
-                    smoothContent.style.transform = `translate3d(0, -${scrollState.current.toFixed(2)}px, 0)`;
-                    requestAnimationFrame(smoothScrollUpdate);
-                }
-
-                initSmoothScroll();
-                smoothScrollUpdate();
-                window.addEventListener('resize', initSmoothScroll);
-            }
-            // --- END: Smooth Scroll Logic ---
-
-            // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const headerHeight = document.querySelector('.header').offsetHeight;
-                        const targetPosition = targetElement.offsetTop - headerHeight;
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
+                    // The default smooth scroll is handled by CSS `scroll-behavior: smooth;`
+                    // We only prevent default if we add custom logic.
+                    // For this version, we let the browser handle it.
+                    
+                    // Close mobile menu on click
+                    const mainNav = document.querySelector('.main-nav');
+                    if(mainNav.classList.contains('active')){
+                        mainNav.classList.remove('active');
                     }
                 });
             });
 
-            // Scroll animations
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
@@ -1362,7 +1309,6 @@
                 observer.observe(el);
             });
 
-            // Header background on scroll
             const header = document.querySelector('.header');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
@@ -1372,28 +1318,12 @@
                 }
             });
 
-            // Mobile menu toggle
             const mobileToggle = document.querySelector('.mobile-toggle');
-            const navLinks = document.querySelector('.nav-links');
-            const desktopCta = document.getElementById('desktop-cta');
-
+            const mainNav = document.querySelector('.main-nav');
+            
             mobileToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
+                mainNav.classList.toggle('active');
             });
-            
-            // Hide mobile cta if screen is large
-            function handleResize() {
-                if (window.innerWidth <= 768) {
-                    desktopCta.style.display = 'none';
-                } else {
-                    desktopCta.style.display = 'inline-flex';
-                    navLinks.classList.remove('active');
-                }
-            }
-            
-            window.addEventListener('resize', handleResize);
-            handleResize(); // Initial check
-
         });
     </script>
 </body>
