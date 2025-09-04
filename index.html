@@ -543,7 +543,7 @@
 
         .useful-links-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(4, 1fr); /* All cards in one row on desktop */
             gap: 1.5rem;
             margin-top: 3rem;
         }
@@ -558,7 +558,7 @@
             color: inherit;
             position: relative;
             transition: all 0.3s ease;
-            padding: 1.5rem;
+            padding: 1.25rem; /* Made card smaller */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -572,15 +572,15 @@
         }
 
         .link-icon-wrapper {
-            height: 60px;
-            width: 60px;
+            height: 50px; /* Made icon smaller */
+            width: 50px; /* Made icon smaller */
             background: var(--gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--white);
-            font-size: 2rem;
+            font-size: 1.75rem; /* Adjusted icon size */
             margin-bottom: 1rem;
         }
 
@@ -871,12 +871,12 @@
                 grid-template-columns: 1fr;
             }
             
-            .services-grid, .portfolio-grid, .useful-links-grid {
+            .services-grid, .portfolio-grid {
                  grid-template-columns: 1fr;
             }
 
             .useful-links-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr); /* Two cards per row on tablet */
             }
 
             .contact-wrapper {
@@ -893,6 +893,12 @@
             }
             .footer-social {
                 justify-content: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+             .useful-links-grid {
+                grid-template-columns: 1fr; /* One card per row on mobile */
             }
         }
 
@@ -1280,12 +1286,10 @@
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     // The default smooth scroll is handled by CSS `scroll-behavior: smooth;`
-                    // We only prevent default if we add custom logic.
-                    // For this version, we let the browser handle it.
                     
                     // Close mobile menu on click
                     const mainNav = document.querySelector('.main-nav');
-                    if(mainNav.classList.contains('active')){
+                    if(mainNav && mainNav.classList.contains('active')){
                         mainNav.classList.remove('active');
                     }
                 });
